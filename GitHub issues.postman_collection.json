@@ -8,363 +8,647 @@
 	},
 	"item": [
 		{
-			"name": "Создание новой задачи",
-			"event": [
+			"name": "Positive",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var key = \"issue_number\"\r",
-							"var value = pm.response.json().number \r",
-							"pm.collectionVariables.set(key, value)\r",
-							"\r",
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.github+json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <YOUR-TOKEN>"
-					},
-					{
-						"key": "X-GitHub-Api-Version",
-						"value": "2022-11-28"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Issue 1\",\r\n    \"body\": \"Something went wrong.\",\r\n    \"labels\": [\r\n        \"bug\"\r\n    ],\r\n    \"assignees\": [\r\n        \"{{owner}}\"\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/{{owner}}/{{repo}}/issues",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"{{owner}}",
-						"{{repo}}",
-						"issues"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получение списка задач",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.github+json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <YOUR-TOKEN>"
-					},
-					{
-						"key": "X-GitHub-Api-Version",
-						"value": "2022-11-28"
-					}
-				],
-				"url": {
-					"raw": "{{list_issue_url}}/issues",
-					"host": [
-						"{{list_issue_url}}"
-					],
-					"path": [
-						"issues"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Изменение задачи",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.github+json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <YOUR-TOKEN>"
-					},
-					{
-						"key": "X-GitHub-Api-Version",
-						"value": "2022-11-28"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Issue 2\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"{{owner}}",
-						"{{repo}}",
-						"issues",
-						"{{issue_number}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Блокировка задачи",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.github+json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <YOUR-TOKEN>"
-					},
-					{
-						"key": "X-GitHub-Api-Version",
-						"value": "2022-11-28"
-					}
-				],
-				"url": {
-					"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}/lock",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"{{owner}}",
-						"{{repo}}",
-						"issues",
-						"{{issue_number}}",
-						"lock"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Разблокировка задачи",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.github+json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <YOUR-TOKEN>"
-					},
-					{
-						"key": "X-GitHub-Api-Version",
-						"value": "2022-11-28"
-					}
-				],
-				"url": {
-					"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}/lock",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"{{owner}}",
-						"{{repo}}",
-						"issues",
-						"{{issue_number}}",
-						"lock"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Удаление задачи",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "authority",
-						"value": "github.com"
-					},
-					{
-						"key": "accept",
-						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
-					},
-					{
-						"key": "accept-language",
-						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
-					},
-					{
-						"key": "cache-control",
-						"value": "max-age=0"
-					},
-					{
-						"key": "content-type",
-						"value": "application/x-www-form-urlencoded"
-					},
-					{
-						"key": "cookie",
-						"value": "_octo=GH1.1.475880253.1688638529; preferred_color_mode=light; tz=Europe%2FMoscow; _device_id=7b2463daeda051806c34e1fcf1a65ba4; user_session=fcGaYEAfqxmPkNeqAkRVqqouUkbMlWhBKzfkUSXhbZYfqh9L; __Host-user_session_same_site=fcGaYEAfqxmPkNeqAkRVqqouUkbMlWhBKzfkUSXhbZYfqh9L; tz=Europe%2FMoscow; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light_tritanopia%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark_tritanopia%22%2C%22color_mode%22%3A%22dark%22%7D%7D; logged_in=yes; dotcom_user=evgenfromgus; has_recent_activity=1; _gh_sess=IrNWhgLVmxFMLFB%2BfQvFLoi5%2Beh5ETUHACSFIDW5DTPYLR%2BH5IdIOovyu5CwuF10pjZ6%2Bx0wvPIiHz%2BQ%2FSvYbZCE1BaUVpY37JHqjfRLDEtJq8HrR2Rf5gHrAwaOkKnpt8Xu92hEiT2nS2N5sIixPYNbniIloOacIPzDCaS99l%2Fg9djP9IvHb2zpPfMsjyc4J4s5Gq10DyQ1%2BHjpf1T9HSYzg2i9DHIqLufI6fVeVkSxm%2Bqor9WPRsycAjUYDYxLFltmE5aM9Um3w8xR4Rz1Dq0awrUZ%2FVMAN35K9AmtENmFp5FLp8yQAy1cBM961yjzoZLlPZ%2F1S9NvP8jpwCmD9udnnOWWYuyZxKnh0iuOIUW5dRnw%2FlMzPUVPnToDhubqXbIAiujsBQ1CMr1uG9XPBSfm%2FmXBEFDX5giakvEPW6jpyt1seUMw3Sb70IOEpw6N8xiP1cBXMLxH--nFDpm2N2llHKktne--2A0lGm7qvB2PR%2BpP%2Bvq5YA%3D%3D"
-					},
-					{
-						"key": "origin",
-						"value": "https://github.com"
-					},
-					{
-						"key": "referer",
-						"value": "https://github.com/evgenfromgus/github_issues_api/issues/6"
-					},
-					{
-						"key": "sec-ch-ua",
-						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
-					},
-					{
-						"key": "sec-ch-ua-mobile",
-						"value": "?0"
-					},
-					{
-						"key": "sec-ch-ua-platform",
-						"value": "\"Windows\""
-					},
-					{
-						"key": "sec-fetch-dest",
-						"value": "document"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "navigate"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-origin"
-					},
-					{
-						"key": "sec-fetch-user",
-						"value": "?1"
-					},
-					{
-						"key": "upgrade-insecure-requests",
-						"value": "1"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
+					"name": "Создание новой задачи",
+					"event": [
 						{
-							"key": "verify_delete",
-							"value": "1",
-							"type": "text"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"issue_number\"\r",
+									"var value = pm.response.json().number \r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 1\",\r\n    \"body\": \"Something went wrong.\",\r\n    \"labels\": [\r\n        \"bug\"\r\n    ],\r\n    \"assignees\": [\r\n        \"{{owner}}\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "_method",
-							"value": "delete",
-							"type": "text"
-						},
-						{
-							"key": "authenticity_token",
-							"value": "",
-							"type": "text"
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{list_issue_url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
-					"host": [
-						"{{list_issue_url}}"
+				{
+					"name": "Получение списка задач",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"{{owner}}",
-						"{{repo}}",
-						"issues",
-						"{{issue_number}}"
-					]
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"url": {
+							"raw": "{{list_issue_url}}/issues",
+							"host": [
+								"{{list_issue_url}}"
+							],
+							"path": [
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменение задачи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Блокировка задачи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}/lock",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}",
+								"lock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Разблокировка задачи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}/lock",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}",
+								"lock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удаление задачи",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "github.com"
+							},
+							{
+								"key": "accept",
+								"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+							},
+							{
+								"key": "accept-language",
+								"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+							},
+							{
+								"key": "cache-control",
+								"value": "max-age=0"
+							},
+							{
+								"key": "content-type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "cookie",
+								"value": "_octo=GH1.1.475880253.1688638529; preferred_color_mode=light; tz=Europe%2FMoscow; _device_id=7b2463daeda051806c34e1fcf1a65ba4; user_session=fcGaYEAfqxmPkNeqAkRVqqouUkbMlWhBKzfkUSXhbZYfqh9L; __Host-user_session_same_site=fcGaYEAfqxmPkNeqAkRVqqouUkbMlWhBKzfkUSXhbZYfqh9L; tz=Europe%2FMoscow; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light_tritanopia%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark_tritanopia%22%2C%22color_mode%22%3A%22dark%22%7D%7D; logged_in=yes; dotcom_user=evgenfromgus; has_recent_activity=1; _gh_sess=IrNWhgLVmxFMLFB%2BfQvFLoi5%2Beh5ETUHACSFIDW5DTPYLR%2BH5IdIOovyu5CwuF10pjZ6%2Bx0wvPIiHz%2BQ%2FSvYbZCE1BaUVpY37JHqjfRLDEtJq8HrR2Rf5gHrAwaOkKnpt8Xu92hEiT2nS2N5sIixPYNbniIloOacIPzDCaS99l%2Fg9djP9IvHb2zpPfMsjyc4J4s5Gq10DyQ1%2BHjpf1T9HSYzg2i9DHIqLufI6fVeVkSxm%2Bqor9WPRsycAjUYDYxLFltmE5aM9Um3w8xR4Rz1Dq0awrUZ%2FVMAN35K9AmtENmFp5FLp8yQAy1cBM961yjzoZLlPZ%2F1S9NvP8jpwCmD9udnnOWWYuyZxKnh0iuOIUW5dRnw%2FlMzPUVPnToDhubqXbIAiujsBQ1CMr1uG9XPBSfm%2FmXBEFDX5giakvEPW6jpyt1seUMw3Sb70IOEpw6N8xiP1cBXMLxH--nFDpm2N2llHKktne--2A0lGm7qvB2PR%2BpP%2Bvq5YA%3D%3D"
+							},
+							{
+								"key": "origin",
+								"value": "https://github.com"
+							},
+							{
+								"key": "referer",
+								"value": "https://github.com/evgenfromgus/github_issues_api/issues/6"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "document"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "navigate"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "sec-fetch-user",
+								"value": "?1"
+							},
+							{
+								"key": "upgrade-insecure-requests",
+								"value": "1"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "verify_delete",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "delete",
+									"type": "text"
+								},
+								{
+									"key": "authenticity_token",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{list_issue_url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
+							"host": [
+								"{{list_issue_url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Negative",
+			"item": [
+				{
+					"name": "Создание новой задачи с некорректным телом запроса",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 201 \", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 1\",\r\n    \"body\": \"Something went wrong.\",\r\n    \"labels\": [\r\n        \"bug\"\r\n    ],\r\n    \"assignees\": [\r\n        \"{{}}\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создание новой задачи c некорректным url",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 1\",\r\n    \"body\": \"Something went wrong.\",\r\n    \"labels\": [\r\n        \"bug\"\r\n    ],\r\n    \"assignees\": [\r\n        \"{{owner}}\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repost/{{owner}}/{{repo}}/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repost",
+								"{{owner}}",
+								"{{repo}}",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменение задачи с некорректным методом",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменение задачи с некорректным телом запроса",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titles\": \"Issue 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Блокировка задачи с некорректным телом запроса",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.github+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR-TOKEN>"
+							},
+							{
+								"key": "X-GitHub-Api-Version",
+								"value": "2022-11-28"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Issue 2\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/{{owner}}/{{repo}}/issues/{{issue_number}}/lock",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{owner}}",
+								"{{repo}}",
+								"issues",
+								"{{issue_number}}",
+								"lock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -372,7 +656,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "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",
+				"value": "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",
 				"type": "string"
 			}
 		]
@@ -421,12 +705,6 @@
 		{
 			"key": "issue_number",
 			"value": ""
-		},
-		{
-			"key": "token",
-			"value": "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",
-			"type": "string",
-			"disabled": true
 		}
 	]
 }
