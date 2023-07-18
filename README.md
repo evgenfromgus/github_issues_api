@@ -2,7 +2,7 @@
 1. Скачать файл коллекции - GitHub issues.postman_collection.
 2. Импортировать коллекцию в Postman.
 <img src="image/task_list.jpg">
-3. Сгенерировать на Гитхабе свой Personal access tokens (classic).
+3. Сгенерировать на Гитхабе свой Personal access tokens (classic).<br> 
 4. Вставить этот токен  в поле авторизации колекции, как показано на рисунке. Сохранить изменения.
 <img src="image/insert_token.jpg">
 5. Cоздание задачи.
